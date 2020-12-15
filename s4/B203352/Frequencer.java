@@ -71,8 +71,9 @@ public class Frequencer implements FrequencerInterface{
         // if suffix_i = suffix_j, it returns 0;   
 
         // ここにコードを記述せよ 
-        for (int k; i + k >= mySpace.length || j + k >= mySpace.length; k++) {
-            
+        for (int k = 0; i + k < mySpace.length && j + k < mySpace.length; k++) {
+            if (mySpace[i + k] > mySpace[j + k]) return 1;
+            else if (mySpace[i + k] < mySpace[j + k]) return -1; 
         }
 
         return 0; // この行は変更しなければいけない。 
@@ -108,9 +109,9 @@ public class Frequencer implements FrequencerInterface{
         for (int i = 0; i < suffixArray.length - 1; i++) {
             for (int j = suffixArray.length - 1; j > i; j--) {
                 // 辞書順になっていなかったら交換
-                if (suffixCompare(i, j) == 1) {
-                    int temp = suffixArray[i];
-                    suffixArray[i] = suffixArray[j];
+                if (suffixCompare(j - 1, j) == 1) {
+                    int temp = suffixArray[j - 1];
+                    suffixArray[j - 1] = suffixArray[j];
                     suffixArray[j] = temp;
                 }
             }
