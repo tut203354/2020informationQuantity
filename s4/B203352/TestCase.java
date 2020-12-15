@@ -25,52 +25,76 @@ public interface InformationEstimatorInterface{
 // The behavior is undefined, if the true value is finete but larger than Double.MAX_VALUE.
 // Note that this happens only when the space is unreasonably large. We will encounter other problem anyway.
 // Otherwise, estimation of information quantity, 
-}
+}                        
 */
 
 
 public class TestCase {
     public static void main(String[] args) {
-        try {
-            FrequencerInterface myObject;
-            int freq;
-            System.out.println("checking s4.B203352.Frequencer");
-            myObject = new s4.B203352.Frequencer();
-            myObject.setSpace("Hi Ho Hi Ho".getBytes());
-            myObject.setTarget("H".getBytes());
-            freq = myObject.frequency();
-            System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-            if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("Exception occurred: STOP");
-        }
+	int c;
+	c = 0;
+	try {
+	    FrequencerInterface  myObject;
+	    int freq;
+		    c = 0;
+	    System.out.println("checking Frequencer");
 
-        try {
-            InformationEstimatorInterface myObject;
-            double value;
-            System.out.println("checking s4.B203352.InformationEstimator");
-            myObject = new s4.B203352.InformationEstimator();
-            myObject.setSpace("3210321001230123".getBytes());
-            myObject.setTarget("0".getBytes());
-            value = myObject.estimation();
-            System.out.println(">0 "+value);
-            myObject.setTarget("01".getBytes());
-            value = myObject.estimation();
-            System.out.println(">01 "+value);
-            myObject.setTarget("0123".getBytes());
-            value = myObject.estimation();
-            System.out.println(">0123 "+value);
-            myObject.setTarget("00".getBytes());
-            value = myObject.estimation();
-            System.out.println(">00 "+value);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("Exception occurred: STOP");
-        }
+	    // This is smoke test
+	    myObject = new Frequencer();
+	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
+	    myObject.setTarget("H".getBytes());
+	    freq = myObject.frequency();
+	    if(4 != freq) {System.out.println("frequency() for Hi_Ho_Hi_Ho, should return 4, when taget is H. But it returns "+freq); c++; }
 
+	    // Write your testCase here
+		freq = myObject.subByteFrequency(3, 7);
+		if(2 != freq) {System.out.println("subByteFrequency(3, 7) for Hi_Ho_Hi_Ho, should return 2, when target is H. But it returns "+freq); c++; }
+
+		myObject = new Frequencer();
+		myObject.setSpace("Hi Ho Hi Ho".getBytes());
+		freq = myObject.frequency();
+		if(-1 != freq) {System.out.println("frequency() should return -1, when target is not set. But it returns "+freq); c++; }
+		myObject.setTarget("".getBytes());
+		freq = myObject.frequency();
+		if(-1 != freq) {System.out.println("frequency() should return -1, when target's length is zero. But it returns "+freq); c++; }
+
+		myObject = new Frequencer();
+		myObject.setTarget("H".getBytes());
+		freq = myObject.frequency();
+		if(0 != freq) {System.out.println("frequency() should return 0, when space is not set. But it returns "+freq); c++; }
+		myObject.setSpace("".getBytes());
+		freq = myObject.frequency();
+		if(0 != freq) {System.out.println("frequency() should return 0, when space's length is zero. But it returns "+freq); c++; }
+	}
+	catch(Exception e) {
+	    System.out.println("Exception occurred in Frequencer Object");
+	    c++;
+	}
+
+	try {
+	    InformationEstimatorInterface myObject;
+	    double value;
+	    System.out.println("checking InformationEstimator");
+	    myObject = new InformationEstimator();
+	    myObject.setSpace("3210321001230123".getBytes());
+	    myObject.setTarget("0".getBytes());
+	    value = myObject.estimation();
+	    if((value < 1.9999) || (2.0001 <value)) { System.out.println("IQ for 0 in 3210321001230123 should be 2.0. But it returns "+value); c++; }
+	    myObject.setTarget("01".getBytes());
+	    value = myObject.estimation();
+	    if((value < 2.9999) || (3.0001 <value)) { System.out.println("IQ for 01 in 3210321001230123 should be 3.0. But it returns "+value); c++; }
+	    myObject.setTarget("0123".getBytes());
+	    value = myObject.estimation();
+	    if((value < 2.9999) || (3.0001 <value)) { System.out.println("IQ for 0123 in 3210321001230123 should be 3.0. But it returns "+value); c++; }
+	    myObject.setTarget("00".getBytes());
+	    value = myObject.estimation();
+	    if((value < 3.9999) || (4.0001 <value)) { System.out.println("IQ for 00 in 3210321001230123 should be 4.0. But it returns "+value); c++; }
+	}
+	catch(Exception e) {
+	    System.out.println("Exception occurred in InformationEstimator Object");
+	    c++;
+	}
+	if(c == 0) { System.out.println("TestCase OK"); }
     }
-}
-
+}	    
+	    
