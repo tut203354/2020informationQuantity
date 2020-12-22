@@ -1,4 +1,4 @@
-package s4.B203352;  // ここは、かならず、自分の名前に変えよ。
+package s4.B203354;  // ここは、かならず、自分の名前に変えよ。
 import java.lang.*;
 import s4.specification.*;
 
@@ -205,7 +205,6 @@ public class Frequencer implements FrequencerInterface{
         return 0; // この行は変更しなければならない。
     }
 
-
     private int subByteStartIndex(int start, int end) {
         //suffix arrayのなかで、目的の文字列の出現が始まる位置を求めるメソッド
         // 以下のように定義せよ。
@@ -234,13 +233,25 @@ public class Frequencer implements FrequencerInterface{
         // Assuming the suffix array is created from "Hi Ho Hi Ho",                 
         // if target_start_end is "Ho ", it will return 6.                
         //                                                                          
-        // ここにコードを記述せよ。                                                 
-        
+        // ここにコードを記述せよ。
         for (int i = 0; i < suffixArray.length; i++) {
             if (targetCompare(suffixArray[i], start, end) == 0) return i;
         }
-                                                   
-        return -1; //このコードは変更しなければならない。          
+
+        return -1;
+//        int middle = (left + right) / 2;
+//        if (right < left) return -1;
+//
+//        int comparison_result = targetCompare(suffixArray[i], start, end);
+//        if (comparison_result == 0) {
+//            return middle;
+//        }
+//        else if (comparison_result == 1) {
+//            return binarySearch(left, middle - 1, start, end);
+//        }
+//        else {
+//            return binarySearch(middle + 1, right, start, end);
+//        }
     }
 
     private int subByteEndIndex(int start, int end) {
@@ -277,7 +288,6 @@ public class Frequencer implements FrequencerInterface{
 
         return -1; // この行は変更しなければならない、       
     }
-
 
     // Suffix Arrayを使ったプログラムのホワイトテストは、
     // privateなメソッドとフィールドをアクセスすることが必要なので、
