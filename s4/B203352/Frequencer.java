@@ -229,7 +229,12 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is "Ho ", it will return 6.                
         //                                                                          
         // ここにコードを記述せよ。                                                 
-        //                                                                         
+        
+	for (int i = 0; i < suffixArray.length; i++) {
+		for (int j = start; j < end; j++)
+			// mySpace[suffixArray[i] + j]とmyTarget[j]の比較
+	}
+                                                   
         return suffixArray.length; //このコードは変更しなければならない。          
     }
 
