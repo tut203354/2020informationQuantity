@@ -195,7 +195,13 @@ public class Frequencer implements FrequencerInterface{
         //            suffixCompare should return -1.
         //
         // ここに比較のコードを書け 
-        //
+        while (i < mySpace.length && j < k) {
+            if (mySpace[i] > myTarget[j]) return 1;
+            else if (mySpace[i] < myTarget[j]) return -1;
+            i++;
+            j++;
+        }
+
         return 0; // この行は変更しなければならない。
     }
 
@@ -230,12 +236,11 @@ public class Frequencer implements FrequencerInterface{
         //                                                                          
         // ここにコードを記述せよ。                                                 
         
-	for (int i = 0; i < suffixArray.length; i++) {
-		for (int j = start; j < end; j++)
-			// mySpace[suffixArray[i] + j]とmyTarget[j]の比較
-	}
+        for (int i = 0; i < suffixArray.length; i++) {
+            if (targetCompare(suffixArray[i], start, end) == 0) return i;
+        }
                                                    
-        return suffixArray.length; //このコードは変更しなければならない。          
+        return -1; //このコードは変更しなければならない。          
     }
 
     private int subByteEndIndex(int start, int end) {
@@ -266,8 +271,11 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is"i", it will return 9 for "Hi Ho Hi Ho".    
         //                                                                   
         //　ここにコードを記述せよ                                           
-        //                                                                   
-        return suffixArray.length; // この行は変更しなければならない、       
+        for (int i = suffixArray.length - 1; i > 0; i--) {
+            if (targetCompare(suffixArray[i], start, end) == 0) return i + 1;
+        }
+
+        return -1; // この行は変更しなければならない、       
     }
 
 
@@ -284,6 +292,7 @@ public class Frequencer implements FrequencerInterface{
     public static void main(String[] args) {
         Frequencer frequencerObject;
         try { // テストに使うのに推奨するmySpaceの文字は、"ABC", "CBA", "HHH", "Hi Ho Hi Ho".
+            /*
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("ABC".getBytes());
             frequencerObject.printSuffixArray();
@@ -293,6 +302,7 @@ public class Frequencer implements FrequencerInterface{
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("HHH".getBytes());
             frequencerObject.printSuffixArray();
+            */
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
             frequencerObject.printSuffixArray();
@@ -320,6 +330,7 @@ public class Frequencer implements FrequencerInterface{
             if(4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         }
         catch(Exception e) {
+            e.printStackTrace();
             System.out.println("STOP");
         }
     }
