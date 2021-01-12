@@ -73,12 +73,12 @@ public class Frequencer implements FrequencerInterface{
         // ここにコードを記述せよ
         while (i < mySpace.length && j < mySpace.length) {
             if (mySpace[i] > mySpace[j]) return 1;
-            else if (mySpace[i] < mySpace[j]) return -1; 
+            else if (mySpace[i] < mySpace[j]) return -1;
             i++;
             j++;
         }
-        if (i < j) return 1;
-        else if (i > j) return -1;
+        if (i > j) return 1;
+        else if (i < j) return -1;
 
         return 0; // この行は変更しなければいけない。 
     }
@@ -234,11 +234,14 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is "Ho ", it will return 6.                
         //                                                                          
         // ここにコードを記述せよ。
-        for (int i = 0; i < suffixArray.length; i++) {
-            if (targetCompare(suffixArray[i], start, end) == 0) return i;
-        }
+//        for (int i = 0; i < suffixArray.length; i++) {
+//            if (targetCompare(suffixArray[i], start, end) == 0) return i;
+//        }
+//
+//        return -1;
 
-        return -1;
+        return binarySearchForStart(start, end, 0, suffixArray.length - 1);
+
 //        int middle = (left + right) / 2;
 //        if (right < left) return -1;
 //
@@ -282,11 +285,56 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is"i", it will return 9 for "Hi Ho Hi Ho".    
         //                                                                   
         //　ここにコードを記述せよ                                           
-        for (int i = suffixArray.length - 1; i > 0; i--) {
-            if (targetCompare(suffixArray[i], start, end) == 0) return i + 1;
-        }
+//        for (int i = suffixArray.length - 1; i > 0; i--) {
+//            if (targetCompare(suffixArray[i], start, end) == 0) return i + 1;
+//        }
+//
+//        return -1; // この行は変更しなければならない、
 
-        return -1; // この行は変更しなければならない、       
+         return binarySearchForEnd(start, end, 0, suffixArray.length - 1);
+
+    }
+
+    public int binarySearchForStart(int start, int end, int left, int right) {
+        int mid = (left + right) / 2;
+        if (mid == 0) {
+            return mid;
+        }
+        int result1 = targetCompare(suffixArray[mid], start, end);
+        int result2 = targetCompare(suffixArray[mid - 1], start, end);
+        if (result1 > 0) {
+            return binarySearchForStart(start, end, left, mid - 1);
+        }
+        else if (result1 < 0) {
+            return binarySearchForStart(start, end, mid + 1, right);
+        }
+        else if (result1 == 0 && result2 == 0) {
+            return binarySearchForStart(start, end, left, mid - 1);
+        }
+        else {
+            return mid;
+        }
+    }
+
+    public int binarySearchForEnd(int start, int end, int left, int right) {
+        int mid = (left + right) / 2;
+        if (mid == suffixArray.length - 1) {
+            return mid;
+        }
+        int result1 = targetCompare(suffixArray[mid], start, end);
+        int result2 = targetCompare(suffixArray[mid + 1], start, end);
+        if (result1 > 0) {
+            return binarySearchForEnd(start, end, left, mid - 1);
+        }
+        else if (result1 < 0) {
+            return binarySearchForEnd(start, end, mid + 1, right);
+        }
+        else if (result1 == 0 && result2 == 0) {
+            return binarySearchForEnd(start, end, mid + 1, right);
+        }
+        else {
+            return mid + 1;
+        }
     }
 
     // Suffix Arrayを使ったプログラムのホワイトテストは、
