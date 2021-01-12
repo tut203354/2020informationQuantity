@@ -1,5 +1,6 @@
 package s4.B203354;  // ここは、かならず、自分の名前に変えよ。
 import java.lang.*;
+import java.util.Random;
 import s4.specification.*;
 
 
@@ -110,16 +111,18 @@ public class Frequencer implements FrequencerInterface{
         // のようになるべきである。
 
         // バブルソート
-        for (int i = 0; i < suffixArray.length - 1; i++) {
-            for (int j = suffixArray.length - 1; j > i; j--) {
-                // 辞書順になっていなかったら交換
-                if (suffixCompare(suffixArray[j - 1], suffixArray[j]) == 1) {
-                    int temp = suffixArray[j - 1];
-                    suffixArray[j - 1] = suffixArray[j];
-                    suffixArray[j] = temp;
-                }
-            }
-        }
+//        for (int i = 0; i < suffixArray.length - 1; i++) {
+//            for (int j = suffixArray.length - 1; j > i; j--) {
+//                // 辞書順になっていなかったら交換
+//                if (suffixCompare(suffixArray[j - 1], suffixArray[j]) == 1) {
+//                    int temp = suffixArray[j - 1];
+//                    suffixArray[j - 1] = suffixArray[j];
+//                    suffixArray[j] = temp;
+//                }
+//            }
+//        }
+
+        quickSort(0, suffixArray.length - 1);
     }
 
     // ここから始まり、指定する範囲までは変更してはならないコードである。
@@ -293,6 +296,39 @@ public class Frequencer implements FrequencerInterface{
 
          return binarySearchForEnd(start, end, 0, suffixArray.length - 1);
 
+    }
+
+    public int random(int min, int max) {
+        return new Random().nextInt(max - min + 1) + min;
+    }
+
+    public void quickSort(int left, int right) {
+        if (left >= right) return;
+
+        int pivot = random(left, right);
+        int tmp;
+
+        tmp = suffixArray[pivot];
+        suffixArray[pivot] = suffixArray[left];
+        suffixArray[left] = tmp;
+
+        int p = left;
+        int k = left + 1;
+        while (k <= right) {
+            if (suffixCompare(suffixArray[k], suffixArray[left]) < 0) {
+                tmp = suffixArray[k];
+                suffixArray[k] = suffixArray[p + 1];
+                suffixArray[p + 1] = tmp;
+                p++;
+            }
+            k++;
+        }
+        tmp = suffixArray[left];
+        suffixArray[left] = suffixArray[p];
+        suffixArray[p] = tmp;
+
+        quickSort(left, p - 1);
+        quickSort(p + 1, right);
     }
 
     public int binarySearchForStart(int start, int end, int left, int right) {
