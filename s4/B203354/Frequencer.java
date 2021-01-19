@@ -244,8 +244,6 @@ public class Frequencer implements FrequencerInterface{
 //
 //        return -1;
 
-        return binarySearchForStart(start, end, 0, suffixArray.length - 1);
-
 //        int middle = (left + right) / 2;
 //        if (right < left) return -1;
 //
@@ -259,6 +257,7 @@ public class Frequencer implements FrequencerInterface{
 //        else {
 //            return binarySearch(middle + 1, right, start, end);
 //        }
+        return binarySearchForStart(start, end, 0, suffixArray.length - 1);
     }
 
     private int subByteEndIndex(int start, int end) {
@@ -335,16 +334,16 @@ public class Frequencer implements FrequencerInterface{
     public int binarySearchForStart(int start, int end, int left, int right) {
         int mid = (left + right) / 2;
         if (left > right) return -1;
+        else if (left == 0 && right == 0) {
+            if (targetCompare(suffixArray[0], start, end) == 0) return 0;
+            else return -1;
+        }
+        else if (left == 0 && right == 1) mid = 1;
 //        else if(mid == 0) {
 //            if (left == 0 && right == 0 && targetCompare(suffixArray[mid], start, end) == 0)
 //                return mid;
 //            else if (left == 0 && right == 1 && )
 //        }
-        else if (left == 0 && right == 1) mid = 1;
-        else if (left == 0 && right == 0) {
-            if (targetCompare(suffixArray[0], start, end) == 0) return 0;
-            else return -1;
-        }
 
         int result1 = targetCompare(suffixArray[mid], start, end);
         int result2 = targetCompare(suffixArray[mid - 1], start, end);
@@ -365,11 +364,11 @@ public class Frequencer implements FrequencerInterface{
     public int binarySearchForEnd(int start, int end, int left, int right) {
         int mid = (left + right) / 2;
         if (left > right) return -1;
-//        else if (mid == suffixArray.length - 1) return mid + 1;
         else if (left == suffixArray.length - 1 && right == suffixArray.length - 1) {
             if (targetCompare(suffixArray[suffixArray.length - 1], start, end) == 0) return suffixArray.length;
             else return -1;
         }
+//        else if (mid == suffixArray.length - 1) return mid + 1;
 
         int result1 = targetCompare(suffixArray[mid], start, end);
         int result2 = targetCompare(suffixArray[mid + 1], start, end);
@@ -428,7 +427,7 @@ public class Frequencer implements FrequencerInterface{
               10:o Hi Ho                     
             */
 
-            frequencerObject.setTarget(" Ho".getBytes());
+            frequencerObject.setTarget("".getBytes());
             //                                         
             // ****  Please write code to check subByteStartIndex, and subByteEndIndex
             //
