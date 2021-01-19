@@ -335,7 +335,13 @@ public class Frequencer implements FrequencerInterface{
     public int binarySearchForStart(int start, int end, int left, int right) {
         int mid = (left + right) / 2;
         if (left > right) return mid + 1;
-        else if(mid == 0) return mid;
+//        else if(mid == 0) {
+//            if (left == 0 && right == 0 && targetCompare(suffixArray[mid], start, end) == 0)
+//                return mid;
+//            else if (left == 0 && right == 1 && )
+//        }
+        else if (left == 0 && right == 1) mid = 1;
+        else if (left == 0 && right == 0) return mid;
 
         int result1 = targetCompare(suffixArray[mid], start, end);
         int result2 = targetCompare(suffixArray[mid - 1], start, end);
@@ -356,7 +362,8 @@ public class Frequencer implements FrequencerInterface{
     public int binarySearchForEnd(int start, int end, int left, int right) {
         int mid = (left + right) / 2;
         if (left > right) return mid + 1;
-        else if (mid == suffixArray.length - 1) return mid + 1;
+//        else if (mid == suffixArray.length - 1) return mid + 1;
+        else if (left == suffixArray.length - 1 && right == suffixArray.length - 1) return mid;
 
         int result1 = targetCompare(suffixArray[mid], start, end);
         int result2 = targetCompare(suffixArray[mid + 1], start, end);
@@ -399,7 +406,7 @@ public class Frequencer implements FrequencerInterface{
             frequencerObject.printSuffixArray();
             */
             frequencerObject = new Frequencer();
-            frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
+            frequencerObject.setSpace("HiHoHiHo".getBytes());
             frequencerObject.printSuffixArray();
             /* Example from "Hi Ho Hi Ho"    
                0: Hi Ho                      
@@ -415,7 +422,7 @@ public class Frequencer implements FrequencerInterface{
               10:o Hi Ho                     
             */
 
-            frequencerObject.setTarget(" Ho".getBytes());
+            frequencerObject.setTarget("A".getBytes());
             //                                         
             // ****  Please write code to check subByteStartIndex, and subByteEndIndex
             //
