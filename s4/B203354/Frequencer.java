@@ -157,9 +157,9 @@ public class Frequencer implements FrequencerInterface{
         // The following the counting method using suffix array.
         // 演習の内容は、適切なsubByteStartIndexとsubByteEndIndexを定義することである。
         int first = subByteStartIndex(start, end);
-        System.out.println(first);
+//        System.out.println(first);
         int last1 = subByteEndIndex(start, end);
-        System.out.println(last1);
+//        System.out.println(last1);
         return last1 - first;
     }
     // 変更してはいけないコードはここまで。
